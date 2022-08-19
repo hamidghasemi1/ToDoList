@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_list/models/todo_model.dart';
 import 'package:todo_list/screens/home_screen.dart';
 
-void main() {
+void main() async {
+  Hive.registerAdapter(ToDoAdapter());
+  await Hive.initFlutter();
   runApp(const MyApp());
 }
 
