@@ -17,7 +17,7 @@ class ToDoAdapter extends TypeAdapter<ToDo> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ToDo(
-      fields[1] as int,
+      fields[1] as String,
       fields[2] as bool,
       fields[0] as String,
     );

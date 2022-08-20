@@ -7,7 +7,7 @@ class ToDo {
   String title;
 
   @HiveField(1)
-  int desc;
+  String desc;
 
   @HiveField(2)
   bool isDone;
