@@ -30,9 +30,23 @@ class ToDoScreen extends StatelessWidget {
       backgroundColor: kBGColor,
       appBar: AppBar(
         title:
-            type == 'Add' ? const Text('Add ToDo') : const Text('Update ToDo'),
+            type == 'Add' ? const Text('Add Wallet') : const Text('Update Wallet'),
         centerTitle: true,
         backgroundColor: kBGColor,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: isDone
+              ? const Icon(
+                  Icons.check_box,
+                  color: kIconColor,
+                )
+              : const Icon(
+                  Icons.check_box_outline_blank,
+                  color: kIconColor,
+                ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -45,7 +59,7 @@ class ToDoScreen extends StatelessWidget {
                 color: Colors.white,
               ),
               decoration: InputDecoration(
-                labelText: 'Title',
+                labelText: 'Wallet Name',
                 labelStyle: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -76,7 +90,7 @@ class ToDoScreen extends StatelessWidget {
                 color: Colors.white,
               ),
               decoration: InputDecoration(
-                labelText: 'Description',
+                labelText: 'Address',
                 labelStyle: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -97,7 +111,7 @@ class ToDoScreen extends StatelessWidget {
                 ),
               ),
             ),
-             const SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             ElevatedButton(
@@ -116,11 +130,12 @@ class ToDoScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              child: Text(type == 'Add'?'Add ToDo':'Update ToDo',
-              style:const TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ) ,
+              child: Text(
+                type == 'Add' ? 'Add Wallet' : 'Update Wallet',
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

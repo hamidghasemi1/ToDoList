@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: kBGColor,
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Wallet'),
         centerTitle: true,
         backgroundColor: kBGColor,
       ),
@@ -43,7 +43,25 @@ class _HomeScreenState extends State<HomeScreen> {
         valueListenable: todoBox.listenable(),
         builder: ((context, Box box, child) {
           if (box.values.isEmpty) {
-            return const Text('No Task');
+            return Center(
+              child: Column(
+                children: const [
+                  Icon(
+                    Icons.account_balance_wallet_outlined,
+                    size: 200.0,
+                    color: kIconColor,
+                  ),
+                  Text(
+                    'No Wallet !',
+                    style: TextStyle(
+                      fontSize: 50.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            );
           } else {
             return ListView.builder(
               itemCount: todoBox.length,
