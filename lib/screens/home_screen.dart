@@ -24,14 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ToDoScreen(),
-              ));
+          MyNavigator(context, 'Add', '', '', false, -1);
         },
         backgroundColor: kIconColor,
-        child: const Icon(Icons.access_time),
+        child: const Icon(Icons.add),
       ),
       body: FutureBuilder(
         future: Hive.openBox('todoDB'),
@@ -55,6 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 final ToDo todo = box.getAt(index);
                 return ListTile(
+                  onTap: () => MyNavigator(context, 'Update', todo.title,
+                      todo.desc, todo.isDone, index),
                   title: Text(todo.title),
                   subtitle: Text(todo.desc),
                 );
@@ -62,5 +60,20 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
         }));
+  }
+
+  MyNavigator(
+      context, String type, String title, String desc, bool isDone, int index) {
+    return Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ToDoScreen(
+            type: type,
+            getTitle: title,
+            getDesc: desc,
+            isDone: isDone,
+            index: index,
+          ),
+        ));
   }
 }
