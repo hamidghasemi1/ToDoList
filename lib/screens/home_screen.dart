@@ -55,6 +55,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       todo.desc, todo.isDone, index),
                   title: Text(todo.title),
                   subtitle: Text(todo.desc),
+                  leading: Checkbox(
+                    value: todo.isDone,
+                    onChanged: (value) {
+                      setState(() {
+                        todo.isDone = value!;
+                      });
+                    },
+                  ),
+                  trailing: IconButton(onPressed: () => remove(index),
+                  icon: const Icon(Icons.delete,),
+                  color: kIconColor,
+                ),
                 );
               },
             );
@@ -75,5 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
             index: index,
           ),
         ));
+  }
+  void remove(int index){
+    Box box = Hive.box('todoDB');
+    box.deleteAt(index);
   }
 }
