@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_list/constants/constants.dart';
 import 'package:todo_list/models/todo_model.dart';
@@ -18,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: kBGColor,
       appBar: AppBar(
-        title: Text('home'),
+        title: const Text('Home'),
         centerTitle: true,
         backgroundColor: kBGColor,
       ),
@@ -44,29 +43,69 @@ class _HomeScreenState extends State<HomeScreen> {
         valueListenable: todoBox.listenable(),
         builder: ((context, Box box, child) {
           if (box.values.isEmpty) {
-            return Text('No Task');
+            return const Text('No Task');
           } else {
             return ListView.builder(
               itemCount: todoBox.length,
               itemBuilder: (context, index) {
                 final ToDo todo = box.getAt(index);
-                return ListTile(
-                  onTap: () => MyNavigator(context, 'Update', todo.title,
-                      todo.desc, todo.isDone, index),
-                  title: Text(todo.title),
-                  subtitle: Text(todo.desc),
-                  leading: Checkbox(
-                    value: todo.isDone,
-                    onChanged: (value) {
-                      setState(() {
-                        todo.isDone = value!;
-                      });
-                    },
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
+                  child: Card(
+                    color: kCardColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: ListTile(
+                      onTap: () => MyNavigator(context, 'Update', todo.title,
+                          todo.desc, todo.isDone, index),
+                      title: Text(
+                        todo.title,
+                        style: TextStyle(
+                          decoration:
+                              todo.isDone ? TextDecoration.lineThrough : null,
+                          color: todo.isDone ? kLineColor : Colors.white,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: todo.isDone
+                          ? null
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 5.0),
+                              child: Text(
+                                todo.desc,
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                      leading: Checkbox(
+                        value: todo.isDone,
+                        shape: const CircleBorder(),
+                        activeColor: kIconColor,
+                        side: const BorderSide(
+                          width: 2.0,
+                          color: kIconColor,
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            todo.isDone = value!;
+                          });
+                        },
+                      ),
+                      trailing: IconButton(
+                        onPressed: () => remove(index),
+                        icon: const Icon(
+                          Icons.delete,
+                        ),
+                        color: kIconColor,
+                      ),
+                    ),
                   ),
-                  trailing: IconButton(onPressed: () => remove(index),
-                  icon: const Icon(Icons.delete,),
-                  color: kIconColor,
-                ),
                 );
               },
             );
@@ -88,7 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ));
   }
-  void remove(int index){
+
+  void remove(int index) {
     Box box = Hive.box('todoDB');
     box.deleteAt(index);
   }
