@@ -97,7 +97,7 @@ class ToDoScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
+             const SizedBox(
               height: 20.0,
             ),
             ElevatedButton(
@@ -105,9 +105,23 @@ class ToDoScreen extends StatelessWidget {
                 onPressedBotton(title.text, desc.text, isDone);
                 Navigator.pop(context);
               },
-              child: type == 'Add'
-                  ? const Text('Add ToDo')
-                  : const Text('Update ToDo'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(kIconColor),
+                fixedSize: MaterialStateProperty.all(
+                  const Size(150, 50),
+                ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+              child: Text(type == 'Add'?'Add ToDo':'Update ToDo',
+              style:const TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ) ,
+              ),
             ),
           ],
         ),
